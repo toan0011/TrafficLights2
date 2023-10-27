@@ -24,8 +24,6 @@ class ViewController: UIViewController {
         view.backgroundColor = .black
         setupLights()
         setupBtn()
-        //        setupNumberTimer()
-        
         let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             
             
@@ -65,18 +63,14 @@ class ViewController: UIViewController {
     
     @IBAction func clickBtnRed(_ sender: Any) {
         lightState = .red
-        
-        setupLight(viewLightOnState: viewLightRed, viewLightAnother1: viewLightGreen, viewLightAnother2: viewLightYellow)
         swichLight()
     }
     @IBAction func clickBtnYellow(_ sender: Any) {
         lightState = .yellow
-        setupLight(viewLightOnState: viewLightYellow, viewLightAnother1: viewLightGreen, viewLightAnother2: viewLightRed)
         swichLight()
     }
     @IBAction func clickBtnGreen(_ sender: Any) {
         lightState = .green
-        setupLight(viewLightOnState: viewLightGreen, viewLightAnother1: viewLightRed, viewLightAnother2: viewLightYellow)
         swichLight()
     }
     
