@@ -94,16 +94,16 @@ class ViewController: UIViewController {
     func swichLight(){
         if self.lightState == .red{
             self.number = 10
-            setupLight(viewLightOnState: viewLightRed, viewLightAnother1: viewLightGreen, viewLightAnother2: viewLightYellow)
+            setupLightOnState(viewLightOnState: viewLightRed, viewLightAnother1: viewLightGreen, viewLightAnother2: viewLightYellow)
         }else if self.lightState == .yellow{
             self.number = 3
-            setupLight(viewLightOnState: viewLightYellow, viewLightAnother1: viewLightGreen, viewLightAnother2: viewLightRed)
+            setupLightOnState(viewLightOnState: viewLightYellow, viewLightAnother1: viewLightGreen, viewLightAnother2: viewLightRed)
         }else if self.lightState == .green{
             self.number = 5
-            setupLight(viewLightOnState: viewLightGreen, viewLightAnother1: viewLightRed, viewLightAnother2: viewLightYellow)
+            setupLightOnState(viewLightOnState: viewLightGreen, viewLightAnother1: viewLightRed, viewLightAnother2: viewLightYellow)
         }
     }
-    func setupLight(viewLightOnState:UIView, viewLightAnother1: UIView,
+    func setupLightOnState(viewLightOnState:UIView, viewLightAnother1: UIView,
                     viewLightAnother2:UIView){
         viewLightOnState.backgroundColor = lightState
         viewLightAnother1.backgroundColor = .gray
