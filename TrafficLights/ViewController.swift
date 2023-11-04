@@ -19,35 +19,26 @@ class ViewController: UIViewController {
     @IBOutlet weak var viewLightRed: UIView!
     var number = 10
     var lightState: UIColor = .red
+    var timer:Timer!
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         setupLights()
         setupBtn()
-        let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-            
-            
-            if self.number >= 0 {
-                self.number -= 1
-            }
-            
-            if self.number == -1 {
-                if self.lightState == .red {
-                    self.lightState = .yellow
-                }else if self.lightState == .yellow{
-                    self.lightState = .green
-                }else{
-                    self.lightState = .red
-                }
-                self.swichLight()
-            }
-            
-            if self.number >= 0{
-                self.numberTimer.text = "\(self.number)"
-            }
-            
+        timer = getTimer()
+        timer.fire()
+    }
+    
+    func getTimer() -> Timer {
+        return Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(runTimer), userInfo: nil, repeats: true)
+    }
+    
+    @objc func runTimer(){
+        if number == -1 {
+            swichLight()
         }
-        
+        numberTimer.text = "\(self.number)"
+        number -= 1
     }
     
     func setupLights(){
@@ -62,16 +53,26 @@ class ViewController: UIViewController {
     }
     
     @IBAction func clickBtnRed(_ sender: Any) {
-        lightState = .red
-        swichLight()
-    }
-    @IBAction func clickBtnYellow(_ sender: Any) {
-        lightState = .yellow
-        swichLight()
-    }
-    @IBAction func clickBtnGreen(_ sender: Any) {
+        timer.invalidate()
         lightState = .green
         swichLight()
+        timer = getTimer()
+        timer.fire()
+    }
+    @IBAction func clickBtnYellow(_ sender: Any) {
+        timer.invalidate()
+        lightState = .red
+        swichLight()
+        timer = getTimer()
+        timer.fire()
+        
+    }
+    @IBAction func clickBtnGreen(_ sender: Any) {
+        timer.invalidate()
+        lightState = .yellow
+        swichLight()
+        timer = getTimer()
+        timer.fire()
     }
     
     func setupBtn(){
@@ -92,19 +93,22 @@ class ViewController: UIViewController {
     }
     
     func swichLight(){
-        if self.lightState == .red{
+        if self.lightState == .green{
+            lightState = .red
             self.number = 10
             setupLightOnState(viewLightOnState: viewLightRed, viewLightAnother1: viewLightGreen, viewLightAnother2: viewLightYellow)
-        }else if self.lightState == .yellow{
+        }else if self.lightState == .red{
+            lightState = .yellow
             self.number = 3
             setupLightOnState(viewLightOnState: viewLightYellow, viewLightAnother1: viewLightGreen, viewLightAnother2: viewLightRed)
-        }else if self.lightState == .green{
+        }else if self.lightState == .yellow{
+            lightState = .green
             self.number = 5
             setupLightOnState(viewLightOnState: viewLightGreen, viewLightAnother1: viewLightRed, viewLightAnother2: viewLightYellow)
         }
     }
     func setupLightOnState(viewLightOnState:UIView, viewLightAnother1: UIView,
-                    viewLightAnother2:UIView){
+                           viewLightAnother2:UIView){
         viewLightOnState.backgroundColor = lightState
         viewLightAnother1.backgroundColor = .gray
         viewLightAnother2.backgroundColor = .gray
